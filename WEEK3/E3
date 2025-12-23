@@ -1,0 +1,56 @@
+class MyCircularQueue {
+private:
+    int buffer[1001];
+    int capacity;
+    int start;
+    int end;
+
+public:
+    MyCircularQueue(int k) {
+        capacity = k;
+        start = -1;
+        end = -1;
+    }
+
+    bool enQueue(int value) {
+        if (isFull())
+            return false;
+
+        if (start == -1)
+            start = 0;
+
+        end = (end + 1) % capacity;
+        buffer[end] = value;
+        return true;
+    }
+
+    bool deQueue() {
+        if (isEmpty())
+            return false;
+
+        if (start == end) {
+            start = -1;
+            end = -1;
+        } else {
+            start = (start + 1) % capacity;
+        }
+
+        return true;
+    }
+
+    int Front() {
+        return isEmpty() ? -1 : buffer[start];
+    }
+
+    int Rear() {
+        return isEmpty() ? -1 : buffer[end];
+    }
+
+    bool isEmpty() {
+        return start == -1;
+    }
+
+    bool isFull() {
+        return ((end + 1) % capacity) == start;
+    }
+};
